@@ -1,0 +1,40 @@
+{{> breadcrum activeItem="Cart"}}
+
+<!-- Cart Start -->
+<div class="cart-page">
+    <div class="container-fluid">
+        <div class="row">
+            {{> table_product product=cart.product}}
+            <div class="col-lg-4">
+                <div class="cart-page-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="coupon">
+                                <input type="text" placeholder="Coupon Code">
+                                <button>Apply Code</button>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="cart-summary">
+                                <div class="cart-content">
+                                    <h1>Cart Summary</h1>
+                                    <p>Sub Total<span>${{cart.subtotal}}</span></p>
+                                    <p>Shipping Cost<span>${{cart.ship}}</span></p>
+                                    <h2>Grand Total<span>${{cart.total}}</span></h2>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="cart-checkout">
+                                <a href="/checkout"><button>Checkout</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Cart End -->
