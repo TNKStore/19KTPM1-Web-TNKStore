@@ -5,8 +5,11 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const hbs = require('hbs')
 
-const indexRouter = require('./routes/main');
-const usersRouter = require('./routes/users');
+const indexRouter = require('./components/others');
+const cartRouter = require('./components/cart');
+const productRouter = require('./components/product');
+const userRouter = require('./components/user');
+const catalogRouter = require('./components/catalog');
 const fs = require("fs");
 
 const app = express();
@@ -22,7 +25,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/cart', cartRouter);
+app.use('/products', productRouter);
+app.use('/catalog', catalogRouter);
+app.use('/customer', userRouter);
 
 app.use(function (req, res, next) {
     next(createError(404));
@@ -42,20 +48,5 @@ app.use(function (err, req, res, next) {
 module.exports = app;
 
 // Register partials
-hbs.registerPartials(__dirname + '/views/partials')
-
-// Register Helper
-hbs.registerHelper("list", function (context, options) {
-    const attrs = Object.keys(options.hash)
-        .map(function (key) {
-            return key + '="' + options.hash[key] + '"';
-        })
-        .join(" ");
-    let ret = ""
-
-    return (
-        context.map(function (item) {
-            return "<li " + attrs + ">" + options.fn(item) + "</li>"
-        }).join("\n")
-    );
-});
+hbs.registerPartials(__dirname + '/views/product/partials');
+hbs.registerPartials(__dirname + '/views/partials');

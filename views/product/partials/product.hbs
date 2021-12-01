@@ -1,6 +1,6 @@
 <div class="product-item">
     <div class="product-title">
-        <a href="product-detail">{{product.name}}</a>
+        <a href="/products/{{product.id}}">{{product.name}}</a>
         <div class="rating">
             <i class="fa fa-star"></i>
             <i class="fa fa-star"></i>
@@ -10,8 +10,8 @@
         </div>
     </div>
     <div class="product-image">
-        <a href="product-detail">
-            <img src="{{product.image.[0]}}" alt="Product Image">
+        <a href="/products/{{product.id}}">
+            <img src="{{product.img}}" alt="Product Image">
         </a>
         <div class="product-action">
             <a href="#"><i class="fa fa-cart-plus"></i></a>
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="product-price">
-        <h3><span>$</span>{{product.price}}</h3>
-        <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
+        <h3>{{product.price}}<span>₫</span></h3>
+        <a class="btn" href=""><i class="fa fa-shopping-cart"></i></a>
     </div>
 </div>

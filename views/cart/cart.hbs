@@ -1,3 +1,5 @@
+{{> header shopActive=" active"}}
+
 {{> breadcrum activeItem="Cart"}}
 
 <!-- Cart Start -->
@@ -28,7 +30,9 @@
 
                         <div class="col-md-12">
                             <div class="cart-checkout">
-                                <a href="/checkout"><button>Checkout</button></a>
+                                <a href="/cart/checkout">
+                                    <button>Checkout</button>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -38,3 +42,5 @@
     </div>
 </div>
 <!-- Cart End -->
+
+{{> footer}}

@@ -1,3 +1,5 @@
+{{> header homeActive=" active"}}
+
 <!-- Main Slider Start -->
 <div class="header">
     <div class="container-fluid">
@@ -6,7 +8,7 @@
                 <nav class="navbar bg-light">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" href="home"><i class="fa fa-home"></i>Home</a>
+                            <a class="nav-link" href="/home"><i class="fa fa-home"></i>Home</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#"><i class="fa fa-shopping-bag"></i>Best Selling</a>
@@ -14,30 +16,36 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#"><i class="fa fa-plus-square"></i>New Arrivals</a>
                         </li>
-                        {{#list category class="nav-item"}}
-                            <a class="nav-link" href="product-list"><i class="fa fa-female"></i>{{name}}</a>
-                        {{/list}}
+                        {{#each category}}
+                            <li class="nav-item">
+                                <a class="nav-link" href="/catalog/{{id}}">
+                                    <i class="fa fa-angle-double-right"></i>{{name}}
+                                </a>
+                            </li>
+                        {{/each}}
                     </ul>
                 </nav>
             </div>
             <div class="col-md-6">
                 <div class="header-slider normal-slider">
-                    <div class="header-slider-item" href="product-list">
+                    <div class="header-slider-item" href="/products">
                         <img src="https://genk.mediacdn.vn/2017/8-1498811649212.jpg" alt="Slider Image"/>
                         <div class="header-slider-caption">
                             <p>Some text goes here that describes the image</p>
                             <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
                         </div>
                     </div>
-                    <div class="header-slider-item" href="product-list">
-                        <img src="https://chothumua.vn/image/files/600x600/laptop-gaming-gia-re-phong-vu-6.jpg" alt="Slider Image"/>
+                    <div class="header-slider-item" href="/products">
+                        <img src="https://chothumua.vn/image/files/600x600/laptop-gaming-gia-re-phong-vu-6.jpg"
+                             alt="Slider Image"/>
                         <div class="header-slider-caption">
                             <p>Some text goes here that describes the image</p>
                             <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
                         </div>
                     </div>
-                    <div class="header-slider-item" href="product-list">
-                        <img src="https://laptopcuongphat.com/hoanghung/5/images/seo/3/laptop-hang-nao-ben-3.jpg" alt="Slider Image"/>
+                    <div class="header-slider-item" href="/products">
+                        <img src="https://laptopcuongphat.com/hoanghung/5/images/seo/3/laptop-hang-nao-ben-3.jpg"
+                             alt="Slider Image"/>
                         <div class="header-slider-caption">
                             <p>Some text goes here that describes the image</p>
                             <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Shop Now</a>
@@ -48,20 +56,16 @@
             <div class="col-md-3">
                 <div class="header-img">
                     <div class="img-item">
-                        {{#with category.[0]}}
-                            <img src="{{image}}"/>
-                            <a class="img-text" href="">
-                                <p>{{name}}</p>
-                            </a>
-                        {{/with}}
+                        <img src="https://images.prismic.io/frameworkmarketplace/cca31de3-3b75-4932-af96-7646b7eba6c7__DSC3630-Edit-cropped.jpg?auto=compress,format"/>
+                        <a class="img-text" href="/products">
+                            <p>{{name}}</p>
+                        </a>
                     </div>
                     <div class="img-item">
-                        {{#with category.[1]}}
-                            <img src="{{image}}"/>
-                            <a class="img-text" href="">
-                                <p>{{name}}</p>
-                            </a>
-                        {{/with}}
+                        <img src="https://images.prismic.io/frameworkmarketplace/5d87bd50-8e78-4a7a-ade9-4356e3693416_Pre-Marketplace+-+image_02.jpg?auto=compress,format"/>
+                        <a class="img-text" href="/products">
+                            <p>{{name}}</p>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -126,8 +130,8 @@
             <div class="col-md-3">
                 <div class="category-item ch-400">
                     {{#with category.[0]}}
-                        <img src="{{image}}"/>
-                        <a class="category-name" href="">
+                        <img src="https://cdn.tgdd.vn/Products/Images/44/247526/asus-zenbook-ux325ea-i5-kg363t-16-600x600.jpg"/>
+                        <a class="category-name" href="/catalog/{{id}}">
                             <p>{{name}}</p>
                         </a>
                     {{/with}}
@@ -136,16 +140,16 @@
             <div class="col-md-3">
                 <div class="category-item ch-250">
                     {{#with category.[1]}}
-                        <img src="{{image}}"/>
-                        <a class="category-name" href="">
+                        <img src="https://cellphones.com.vn/sforum/wp-content/uploads/2019/09/acer-aspire-5-129.jpg"/>
+                        <a class="category-name" href="/catalog/{{id}}">
                             <p>{{name}}</p>
                         </a>
                     {{/with}}
                 </div>
                 <div class="category-item ch-150">
                     {{#with category.[2]}}
-                        <img src="{{image}}"/>
-                        <a class="category-name" href="">
+                        <img src="https://img.websosanh.vn/v10/users/review/images/vsmzqgcy7huqq/1568025192558_2268433.jpg?compress=85"/>
+                        <a class="category-name" href="/catalog/{{id}}">
                             <p>{{name}}</p>
                         </a>
                     {{/with}}
@@ -154,16 +158,16 @@
             <div class="col-md-3">
                 <div class="category-item ch-150">
                     {{#with category.[3]}}
-                        <img src="{{image}}"/>
-                        <a class="category-name" href="">
+                        <img src="https://cellphones.com.vn/sforum/wp-content/uploads/2020/11/ENnqVCdUYAQ-LOA.jpg"/>
+                        <a class="category-name" href="/catalog/{{id}}">
                             <p>{{name}}</p>
                         </a>
                     {{/with}}
                 </div>
                 <div class="category-item ch-250">
                     {{#with category.[4]}}
-                        <img src="{{image}}"/>
-                        <a class="category-name" href="">
+                        <img src="https://salt.tikicdn.com/ts/tmp/61/1f/39/623d5d1320108183a61a74a68b01628b.jpg"/>
+                        <a class="category-name" href="/catalog/{{id}}">
                             <p>{{name}}</p>
                         </a>
                     {{/with}}
@@ -172,8 +176,8 @@
             <div class="col-md-3">
                 <div class="category-item ch-400">
                     {{#with category.[5]}}
-                        <img src="{{image}}"/>
-                        <a class="category-name" href="">
+                        <img src="https://st.quantrimang.com/photos/image/2021/02/06/top-ban-phim-co-1.jpg"/>
+                        <a class="category-name" href="/catalog/{{id}}">
                             <p>{{name}}</p>
                         </a>
                     {{/with}}
@@ -192,7 +196,7 @@
                 <h1>call us for any queries</h1>
             </div>
             <div class="col-md-6">
-                <span>{{contact.phone}}</span>
+                <span>0909080808</span>
             </div>
         </div>
     </div>
@@ -206,7 +210,7 @@
             <h1>Featured Product</h1>
         </div>
         <div class="row align-items-center product-slider product-slider-4">
-            {{#each product}}
+            {{#each products}}
                 <div class="col-lg-3">
                     {{> product product=this}}
                 </div>
@@ -241,7 +245,7 @@
             <h1>Recent Product</h1>
         </div>
         <div class="row align-items-center product-slider product-slider-4">
-            {{#each product}}
+            {{#each products}}
                 <div class="col-lg-3">
                     {{> product product=this}}
                 </div>
@@ -250,3 +254,6 @@
     </div>
 </div>
 <!-- Recent Product End -->
+
+
+{{> footer}}
