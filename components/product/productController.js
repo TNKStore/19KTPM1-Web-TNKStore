@@ -38,7 +38,7 @@ exports.getDetail = async (req, res, next) => {
         const product = await productService.getDetail(id)
         if (product) {
             const related = await productService.listById(product.catalog_id)
-            const catalog = await catalogService.liswt(10)
+            const catalog = await catalogService.list(10)
 
             res.render('product/product-detail',
                 {
