@@ -35,6 +35,9 @@ Product = sequelize.define('product', {
     catalog_id: {
         type: DataTypes.SMALLINT,
         allowNull: false
+    },
+    hide: {
+        type: DataTypes.BOOLEAN
     }
 }, {
     freezeTableName: true,
