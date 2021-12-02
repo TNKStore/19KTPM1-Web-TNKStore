@@ -1,6 +1,5 @@
-const {Sequelize, DataTypes} = require('sequelize');
-const Product = require("./product");
-const sequelize = new Sequelize(process.env.DB_CONNECTION_STRING);
+const {DataTypes} = require('sequelize');
+const sequelize = require('../models/model')
 
 
 Catalog = sequelize.define('catalog', {
