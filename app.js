@@ -4,8 +4,11 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const hbs = require('hbs')
-
+const session = require("express-session")
+const passport = require("./passport")
+const loggedInGuard = require('./middlewares/loggedInGuard')
 const indexRouter = require('./components/others');
+const authRouter = require('./components/auth');
 const cartRouter = require('./components/cart');
 const productRouter = require('./components/product');
 const userRouter = require('./components/user');
@@ -24,11 +27,21 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(session({secret: process.env.SECRET_SESSION}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(function (req, res, next) {
+    res.locals.user = req.user
+    next()
+})
+
 app.use('/', indexRouter);
-app.use('/cart', cartRouter);
+app.use('/', authRouter);
+app.use('/cart', loggedInGuard, cartRouter);
 app.use('/products', productRouter);
 app.use('/catalog', catalogRouter);
-app.use('/customer', userRouter);
+app.use('/customer', loggedInGuard, userRouter);
 
 app.use(function (req, res, next) {
     next(createError(404));

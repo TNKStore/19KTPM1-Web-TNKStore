@@ -1,0 +1,43 @@
+{{> header accActive=" active"}}
+
+<div class="col-lg-6">
+
+    {{#if error}}
+        <label class="error">Email exists</label>
+    {{/if}}
+    <form id="signup-form" method="post" action="/signup">
+        <div id="register-form" class="register-form">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>First Name</label>
+                    <input class="form-control" name="firstName" type="text" placeholder="First Name">
+                </div>
+                <div class="col-md-6">
+                    <label>Last Name"</label>
+                    <input class="form-control" name="lastName" type="text" placeholder="Last Name">
+                </div>
+                <div class="col-md-6">
+                    <label>E-mail</label>
+                    <input class="form-control" name="email" type="email" placeholder="E-mail">
+                </div>
+                <div class="col-md-6">
+                    <label>Mobile No</label>
+                    <input class="form-control" name="phone" type="tel" placeholder="Mobile No">
+                </div>
+                <div class="col-md-6">
+                    <label>Password</label>
+                    <input id="password" class="form-control" name="password" type="password" placeholder="Password">
+                </div>
+                <div class="col-md-6">
+                    <label>Retype Password</label>
+                    <input class="form-control" name="re_password" type="password" placeholder="Password">
+                </div>
+                <div class="col-md-12">
+                    <button type="submit" class="btn">Sign Up</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+{{> footer}}

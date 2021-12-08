@@ -22,19 +22,22 @@ Product = sequelize.define('product', {
     price: {
         type: DataTypes.INTEGER
     },
-    old_price: {
-        type: DataTypes.INTEGER
+    oldPrice: {
+        type: DataTypes.INTEGER,
+        field: 'old_price'
     },
-    update_at: {
+    updateAt: {
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: 'update_at'
     },
     description: {
         type: DataTypes.STRING
     },
-    catalog_id: {
+    catalogID: {
         type: DataTypes.SMALLINT,
-        allowNull: false
+        allowNull: false,
+        field: 'catalog_id'
     },
     hide: {
         type: DataTypes.BOOLEAN

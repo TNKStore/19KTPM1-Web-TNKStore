@@ -3,14 +3,13 @@ const controller = require("./userController")
 const router = express.Router();
 
 router.get('/', function (req, res, next) {
-    res.redirect('/login')
+    res.redirect('/')
 });
 
-router.get('/login', controller.login);
-
-router.get('/signup', controller.signup);
-
 router.get('/my-account', controller.getAccount);
+
+router.post('/my-account/account-detail', controller.changeAccountDetail);
+router.post('/my-account/change-password', controller.changePassword);
 
 router.get('/wishlist', controller.getWishlist);
 

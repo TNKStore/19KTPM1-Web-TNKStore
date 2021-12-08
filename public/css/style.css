@@ -2405,3 +2405,9 @@ h2 {
         text-align: center;
     }
 }
+
+label.error {
+    color: #FF4444;
+    font-size: 13px;
+    display: block !important;
+}
