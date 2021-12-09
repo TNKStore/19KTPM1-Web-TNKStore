@@ -11,6 +11,7 @@ exports.findByEmail = (email) => User.findOne({where: {email: email}})
 exports.verifyPassword = (password, user) => bcrypt.compare(password, user.pwd)
 
 exports.register = (email, firstName, lastName, password, phone, address) => {
+    console.log(lastName);
     return User.create({
         email: email,
         firstName: firstName,

@@ -28,7 +28,8 @@ exports.getSignUp = (req, res, next) => {
 }
 
 exports.postSignUp = async (req, res, next) => {
-    const {firstName, lastName, email, password, phone, address} = req.body
+    const {firstName, lastName, email, password, phone, address} = req.body;
+    console.log(lastName);
     const user = userService.register(email, firstName, lastName, password, phone, address)
         .then(_ => {
                 req.login(user, function (err) {

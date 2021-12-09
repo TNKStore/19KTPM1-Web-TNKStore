@@ -12,6 +12,10 @@ User = sequelize.define('user', {
         type: DataTypes.STRING,
         field: 'first_name'
     },
+    lastName: {
+        type: DataTypes.STRING,
+        field: 'last_name'
+    },
     email: {
         type: DataTypes.STRING,
         field: 'email',
@@ -23,7 +27,7 @@ User = sequelize.define('user', {
     },
     phone: {
         type: DataTypes.STRING,
-        field: 'last_name'
+        field: 'phone'
     },
     address: {
         type: DataTypes.STRING,

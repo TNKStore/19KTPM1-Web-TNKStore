@@ -1,16 +1,16 @@
 const userService = require('./userService')
 
 exports.getAccount = async (req, res, next) => {
-    const orders = req.query['orders']
-    const payment = req.query['payment']
-    const address = req.query['address']
-    const account = req.query['account']
-    const success = (req.query['success'] !== undefined)
+    const orders = req.query['orders'];
+    const payment = req.query['payment'];
+    const address = req.query['address'];
+    const account = req.query['account'];
+    const success = (req.query['success'] !== undefined);
     let dashboard;
     if (!orders && !payment && !address && !account) {
-        dashboard = "active"
-    }
-    const user = await userService.findByEmail(req.user.email)
+        dashboard = "active";
+    };
+    const user = await userService.findByEmail(req.user.email);
     res.render('user/my-account', {
         title: 'My Account',
         dashboard,
@@ -20,7 +20,7 @@ exports.getAccount = async (req, res, next) => {
         account,
         success,
         user
-    })
+    });
 }
 
 exports.getWishlist = (req, res, next) => {
