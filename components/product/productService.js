@@ -76,25 +76,40 @@ exports.getPriceRange = (catalog, orderBy) => {
             });
 }
 
-exports.getPages = (page, numPages, orderBy) => orderBy ? Array(numPages)
-    .fill("")
-    .map((_, index) => {
+exports.getPages = (page, numPages, catalogID, orderBy, price, search) => {
+    let query = "";
 
-        return {
-            url: `/products?page=${index + 1}&sort=${orderBy}`,
-            page: index + 1,
-            active: page - 1 === index
-        }
-    }) : Array(numPages)
-    .fill("")
-    .map((_, index) => {
+    if (catalogID) {
+        query += `&catalog=${catalogID}`;
+    }
+    if (orderBy) {
+        query += `&sort=${orderBy}`;
+    }
+    if (price) {
+        query += `&price=${price}`;
+    }
+    if (search) {
+        query += `&search=${search}`;
+    }
 
-        return {
-            url: `/products?page=${index + 1}`,
-            page: index + 1,
-            active: page - 1 === index
-        }
-    });
+    return (query === "") ? Array(numPages)
+        .fill("")
+        .map((_, index) => {
+            return {
+                url: `/products?page=${index + 1}`,
+                page: index + 1,
+                active: page - 1 === index
+            }
+        }) : Array(numPages)
+        .fill("")
+        .map((_, index) => {
+            return {
+                url: `/products?page=${index + 1}${query}`,
+                page: index + 1,
+                active: page - 1 === index
+            }
+        })
+}
 
 exports.list = (page, limit, catalogID, orderBy, price, search) => {
     const offset = (page - 1) * limit

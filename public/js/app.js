@@ -77,7 +77,8 @@ $(document).ready(function () {
                 const parts = currentQuery.split("&");
                 parts[0] = parts[0].slice(1);
                 parts.forEach((part, index) => {
-                    if (part.split("=")[0] !== "search") {
+                    var param = part.split("=")[0];
+                    if (param !== "search" && param !== "page") {
                         searchQuery += `&${part}`;
                     }
                 })

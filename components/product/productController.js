@@ -19,7 +19,7 @@ exports.list = async (req, res, next) => {
         }
 
         const catalogs = await catalogService.list(10)
-        const pages = productService.getPages(page, numPages, orderBy, price)
+        const pages = productService.getPages(page, numPages, catalog, orderBy, price, search)
         const criteria = productService.getCriteria(catalog)
         const range = productService.getPriceRange(catalog, orderBy)
 
