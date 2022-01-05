@@ -24,13 +24,6 @@
                         <div class="col-md-7">
                             <div class="product-content">
                                 <div class="title"><h2>{{product.name}}</h2></div>
-                                <div class="rating">
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                    <i class="fa fa-star"></i>
-                                </div>
                                 <div class="price">
                                     <h4>Price:</h4>
                                     <p>${{product.price}} <span>${{product.oldPrice}}</span></p>
@@ -82,49 +75,31 @@
                                 </ul>
                             </div>
                             <div id="reviews" class="container tab-pane fade">
-                                {{#if user}}
-                                    <div class="reviews-submitted">
-                                        <div class="reviewer">Phasellus Gravida - <span>01 Jan 2020</span></div>
-                                        <div class="rating">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
+                                <div class="reviews-submit">
+                                    <h4>Give your Review:</h4>
+                                    <div class="row form">
+                                        <div class="col-sm-6">
+                                            <input type="text" placeholder="Name">
                                         </div>
-                                        <p>
-                                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                                            doloremque laudantium, totam rem aperiam.
-                                        </p>
-                                    </div>
-                                    <div class="reviews-submit">
-                                        <h4>Give your Review:</h4>
-                                        <div class="rating">
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
-                                            <i class="far fa-star"></i>
+                                        <div class="col-sm-6">
+                                            <input type="email" placeholder="Email">
                                         </div>
-                                        <div class="row form">
-                                            <div class="col-sm-6">
-                                                <input type="text" placeholder="Name">
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <input type="email" placeholder="Email">
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <textarea placeholder="Review"></textarea>
-                                            </div>
-                                            <div class="col-sm-12">
-                                                <button>Submit</button>
-                                            </div>
+                                        <div class="col-sm-12">
+                                            <textarea placeholder="Review"></textarea>
+                                        </div>
+                                        <div class="col-sm-12">
+                                            <button>Submit</button>
                                         </div>
                                     </div>
+                                </div>
 
-                                {{else}}
-                                    <h4><a href="/login">Please log in before giving reviews</a></h4>
-                                {{/if}}
+                                <div class="reviews-submitted">
+                                    <div class="reviewer">Phasellus Gravida - <span>01 Jan 2020</span></div>
+                                    <p>
+                                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
+                                        doloremque laudantium, totam rem aperiam.
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>

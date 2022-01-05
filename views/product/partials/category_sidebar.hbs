@@ -4,7 +4,8 @@
         <ul class="navbar-nav">
             {{#each category}}
                 <li class="nav-item">
-                    <a class="nav-link" href="/catalog/{{id}}"><i class="fa fa-angle-double-right"></i>{{name}}
+                    <a class="nav-link" href="/products?catalog={{id}}">
+                    <i class="fa fa-angle-double-right"></i>{{name}}
                     </a>
                 </li>
             {{/each}}

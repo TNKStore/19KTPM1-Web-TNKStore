@@ -28,6 +28,11 @@ Product = sequelize.define('product', {
         defaultValue: DataTypes.NOW,
         field: 'update_at'
     },
+    createdAt: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'created_at'
+    },
     description: {
         type: DataTypes.STRING
     },
@@ -38,6 +43,16 @@ Product = sequelize.define('product', {
     },
     hide: {
         type: DataTypes.BOOLEAN
+    },
+    amountView: {
+        type: DataTypes.INTEGER,
+        default: 0,
+        field: 'amount_view'
+    },
+    amountSold: {
+        type: DataTypes.INTEGER,
+        default: 0,
+        field: 'amount_sold'
     }
 }, {
     freezeTableName: true,

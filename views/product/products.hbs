@@ -13,18 +13,18 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="product-search">
-                                        <input value="Search">
-                                        <button><i class="fa fa-search"></i></button>
+                                        <input type="text" value="{{searchQuery}}" id="search_text">
+                                        <button id="search_btn"><i class="fa fa-search"></i></button>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="product-short">
+                                    <div class="product-sort">
                                         <div class="dropdown">
-                                            <div class="dropdown-toggle" data-toggle="dropdown">Product short by</div>
+                                            <div class="dropdown-toggle" data-toggle="dropdown">{{sort}}</div>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item">Newest</a>
-                                                <a href="#" class="dropdown-item">Popular</a>
-                                                <a href="#" class="dropdown-item">Most sale</a>
+                                                {{# each criteria}}
+                                                    <a href="{{url}}" class="dropdown-item">{{value}}</a>
+                                                {{/each}}
                                             </div>
                                         </div>
                                     </div>
@@ -32,19 +32,12 @@
                                 <div class="col-md-4">
                                     <div class="product-price-range">
                                         <div class="dropdown">
-                                            <div class="dropdown-toggle" data-toggle="dropdown">Product price range
+                                            <div class="dropdown-toggle" data-toggle="dropdown">{{priceRange}}
                                             </div>
                                             <div class="dropdown-menu dropdown-menu-right">
-                                                <a href="#" class="dropdown-item">$0 to $50</a>
-                                                <a href="#" class="dropdown-item">$51 to $100</a>
-                                                <a href="#" class="dropdown-item">$101 to $150</a>
-                                                <a href="#" class="dropdown-item">$151 to $200</a>
-                                                <a href="#" class="dropdown-item">$201 to $250</a>
-                                                <a href="#" class="dropdown-item">$251 to $300</a>
-                                                <a href="#" class="dropdown-item">$301 to $350</a>
-                                                <a href="#" class="dropdown-item">$351 to $400</a>
-                                                <a href="#" class="dropdown-item">$401 to $450</a>
-                                                <a href="#" class="dropdown-item">$451 to $500</a>
+                                                {{#each range}}
+                                                    <a href="{{url}}" class="dropdown-item">{{value}}</a>
+                                                {{/each}}
                                             </div>
                                         </div>
                                     </div>
@@ -57,6 +50,8 @@
                         <div class="col-md-4">
                             {{> product product=this}}
                         </div>
+                    {{else}}
+                        <div class="col-md-12"><h3 class="no-product-notice">NO PRODUCTS HERE</h3></div>
                     {{/each}}
                 </div>
 
@@ -68,10 +63,6 @@
                             {{#if previous}}
                                 <li class="page-item">
                                     <a class="page-link" href={{previous.url}}>Previous</a>
-                                </li>
-                            {{else}}
-                                <li class="page-item disabled">
-                                    <a class="page-link">Previous</a>
                                 </li>
                             {{/if}}
 
@@ -88,10 +79,6 @@
                             {{#if next}}
                                 <li class="page-item">
                                     <a class="page-link" href={{next.url}}>Next</a>
-                                </li>
-                            {{else}}
-                                <li class="page-item disabled">
-                                    <a class="page-link">Next</a>
                                 </li>
                             {{/if}}
                         </ul>

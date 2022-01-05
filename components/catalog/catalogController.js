@@ -15,7 +15,7 @@ exports.list = async (req, res, next) => {
             next(createError(404));
         } else {
             const catalog = await catalogService.list(10)
-            const pages = productService.pages(page, numPages)
+            const pages = productService.getPages(page, numPages)
 
             res.render('product/products',
                 {

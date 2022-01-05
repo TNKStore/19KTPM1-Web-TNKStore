@@ -3,30 +3,46 @@ const catalogService = require("../catalog/catalogService");
 const createError = require("http-errors");
 
 exports.list = async (req, res, next) => {
-    const page = parseInt(req.query.page) || 1;
+    let page = parseInt(req.query.page) || 1;
+    const {sort: orderBy, price, catalog, search} = req.query;
+
     const limit = 9;
     try {
-        const products = await productService.list(page, limit);
+        let products = await productService.list(page, limit, catalog, orderBy, price, search);
         const numPages = Math.ceil(products.count / limit);
 
         if (page > numPages) {
-            next(createError(404));
-        } else {
-            const catalog = await catalogService.list(10)
-            const pages = productService.pages(page, numPages)
-
-            res.render('product/products',
-                {
-                    title: 'TNKStore',
-                    product: products.rows,
-                    pages: pages,
-                    previous: pages[page - 2] || false,
-                    next: pages[page] || false,
-                    category: catalog,
-                    categoryName: 'All'
-                });
+            if (numPages > 0) {
+                page = numPages;
+                products = await productService.list(page, limit, catalog, orderBy, price, search);
+            }
         }
-    } catch (e) {
+
+        const catalogs = await catalogService.list(10)
+        const pages = productService.getPages(page, numPages, orderBy, price)
+        const criteria = productService.getCriteria(catalog)
+        const range = productService.getPriceRange(catalog, orderBy)
+
+        res.render('product/products',
+            {
+                title: 'TNKStore',
+                product: products.rows,
+                pages: pages,
+                previous: pages[page - 2] || false,
+                next: pages[page] || false,
+                sort: orderBy ? criteria.filter((value) => value.criteria === orderBy)[0].value
+                    : "Product sort by",
+                priceRange: price ? range.filter((value) => value.range === price)[0].value
+                    : "Product price range",
+                range,
+                criteria,
+                searchQuery: search || "Search product",
+                category: catalogs,
+                categoryName: catalog ? (await catalogService.getByID(catalog)).name : 'All'
+            });
+
+    } catch
+        (e) {
         console.log(e)
         next(createError(404));
     }

@@ -56,3 +56,20 @@ $(document).ready(function () {
     };
     $("#change-password-form").validate(e)
 })
+
+$("#search_text")[0].onfocus = function (e) {
+    const $search_text = $("#search_text")[0];
+    if ($search_text.value === "Search product")
+        $search_text.value = "";
+}
+
+$("#search_text")[0].onfocusout = function (e) {
+    const $search_text = $("#search_text")[0];
+    if ($search_text.value === "")
+        $search_text.value = "Search product";
+}
+
+// Search product
+$("#search_btn")[0].onclick = function (e) {
+    window.location.href = `/products?search=${$("#search_text").val()}`;
+}
