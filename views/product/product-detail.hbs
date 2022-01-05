@@ -11,13 +11,15 @@
                     <div class="row align-items-center">
                         <div class="col-md-5">
                             <div class="product-slider-single normal-slider">
-                                <img src="{{product.img}}" alt="Product Image">
+                                <img src="{{product.images.[0].url}}" alt="Product Image">
                             </div>
-                            <!--                            <div class="product-slider-single-nav normal-slider">-->
-                            <!--                                <div class="slider-nav-img">-->
-                            <!--                                    <img src="{{product.img}}" alt="Product Image">-->
-                            <!--                                </div>-->
-                            <!--                            </div>-->
+                            <div class="product-slider-single-nav normal-slider">
+                                {{#each product.images}}
+                                    <div class="slider-nav-img">
+                                        <img src="{{url}}" alt="Product Image">
+                                    </div>
+                                {{/each}}
+                            </div>
                         </div>
                         <div class="col-md-7">
                             <div class="product-content">

@@ -28,19 +28,14 @@ exports.getSignUp = (req, res, next) => {
 }
 
 exports.postSignUp = async (req, res, next) => {
-    const {firstName, lastName, email, password, phone, address} = req.body;
-    console.log(lastName);
-    const user = userService.register(email, firstName, lastName, password, phone, address)
-        .then(_ => {
-                req.login(user, function (err) {
-                    if (err) {
-                        return next(err);
-                    }
-                    return res.redirect('/');
-                });
-            },
-            _ => {
-                return res.redirect('/signup?error');
-            }
-        )
+    const {firstName, lastName, email, password, phone, address} = req.body
+    if (await userService.findByEmail(email))
+        return res.redirect('/signup?error');
+    const user = await userService.register(email, firstName, lastName, password, phone, address)
+    req.login(user, function (err) {
+        if (err) {
+            return next(err);
+        }
+        return res.redirect('/');
+    });
 }

@@ -1,23 +1,26 @@
 const Product = require("../../models/product")
 const Catalog = require("../../models/catalog")
+const Image = require("../../models/image")
 
 exports.list = (page, limit) => {
     const offset = (page - 1) * limit
     return Product.findAndCountAll({offset: offset, limit: limit})
 }
 
-exports.listById = (catalog_id, page, limit) => {
+exports.listByCatalogId = (catalog_id, page, limit) => {
     if (page && limit) {
         const offset = (page - 1) * limit
         return Product.findAndCountAll(
             {
                 offset: offset, limit: limit,
-                where: {catalog_id: catalog_id}
+                where: {catalog_id: catalog_id},
+                include: [{model: Image}]
             })
     } else {
-        return Product.findAll(
+        return Product.findAndCountAll(
             {
-                where: {catalog_id: catalog_id}
+                where: {catalog_id: catalog_id},
+                include: [{model: Image}]
             })
     }
 }
@@ -42,5 +45,6 @@ exports.pages = (page, numPages) => Array(numPages)
 exports.getDetail = (id) => Product.findOne({
     where: {
         id: id
-    }
+    },
+    include: [{model: Image}]
 })

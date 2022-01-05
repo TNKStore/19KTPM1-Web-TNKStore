@@ -8,7 +8,7 @@ exports.list = async (req, res, next) => {
     const limit = 9;
     try {
         const category = await catalogService.getByID(id)
-        const products = await productService.listById(id, page, limit);
+        const products = await productService.listByCatalogId(id, page, limit);
         const numPages = Math.ceil(products.count / limit);
 
         if (page > numPages) {

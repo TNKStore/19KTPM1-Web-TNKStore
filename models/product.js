@@ -1,6 +1,6 @@
 const {DataTypes} = require('sequelize');
 const sequelize = require('../models/model')
-const Catalog = require("./catalog")
+const Image = require("./image")
 
 Product = sequelize.define('product', {
     id: {
@@ -15,9 +15,6 @@ Product = sequelize.define('product', {
     amount: {
         type: DataTypes.INTEGER,
         defaultValue: 0
-    },
-    img: {
-        type: DataTypes.STRING
     },
     price: {
         type: DataTypes.INTEGER
@@ -47,6 +44,7 @@ Product = sequelize.define('product', {
     timestamps: false
 })
 
-Product.belongsTo(Catalog, {foreignKey: `catalog_id`, targetKey: `id`})
+Product.hasMany(Image);
+Image.belongsTo(Product, {foreignKey: `product_id`, targetKey: `id`})
 
 module.exports = Product
