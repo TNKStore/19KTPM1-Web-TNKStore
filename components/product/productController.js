@@ -41,8 +41,7 @@ exports.list = async (req, res, next) => {
                 categoryName: catalog ? (await catalogService.getByID(catalog)).name : 'All'
             });
 
-    } catch
-        (e) {
+    } catch (e) {
         console.log(e)
         next(createError(404));
     }
@@ -51,7 +50,12 @@ exports.list = async (req, res, next) => {
 exports.getDetail = async (req, res, next) => {
     const id = parseInt(req.params.id)
     if (id) {
-        const product = await productService.getDetail(id)
+        const isViewed = req.session.viewedProduct.includes(id);
+        const product = isViewed ? await productService.getDetail(id) :
+            await productService.updateAmountView(id)
+        if (!isViewed)
+            req.session.viewedProduct.push(id);
+
         if (product) {
             const related = await productService.listByCatalogId(product.catalog_id)
             const catalog = await catalogService.list(10)

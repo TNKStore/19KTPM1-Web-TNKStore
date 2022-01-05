@@ -7,6 +7,7 @@ const hbs = require('hbs')
 const session = require("express-session")
 const passport = require("./passport")
 const loggedInGuard = require('./middlewares/loggedInGuard')
+const userIDMiddleware = require('./middlewares/userIDMiddleware')
 const indexRouter = require('./components/others');
 const authRouter = require('./components/auth');
 const cartRouter = require('./components/cart');
@@ -35,6 +36,8 @@ app.use(function (req, res, next) {
     res.locals.user = req.user
     next()
 })
+
+app.use(userIDMiddleware);
 
 app.use('/', indexRouter);
 app.use('/', authRouter);

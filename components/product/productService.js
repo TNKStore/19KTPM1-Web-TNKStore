@@ -154,3 +154,9 @@ exports.getDetail = (id) => Product.findOne({
     },
     include: [{model: Image}]
 })
+
+exports.updateAmountView = async (id) => {
+    const product = await this.getDetail(id);
+    product.amountView += 1;
+    return product.save();
+}
