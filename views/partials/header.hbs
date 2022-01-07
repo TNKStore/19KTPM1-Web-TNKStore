@@ -1,73 +1,75 @@
-<!-- Nav Bar Start -->
-<div class="nav">
-    <div class="container-fluid">
-        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-            <a href="#" class="navbar-brand">MENU</a>
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+<header>
+    <!-- Nav Bar Start -->
+    <div class="nav">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+                <a href="#" class="navbar-brand">MENU</a>
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                <div class="navbar-nav mr-auto">
-                    <a href="/home" class="nav-item nav-link{{homeActive}}">Home</a>
-                    <a href="/products" class="nav-item nav-link{{shopActive}}">Products</a>
-                    <a href="/contact" class="nav-item nav-link{{contactActive}}">Contact Us</a>
-                </div>
-            </div>
-        </nav>
-    </div>
-</div>
-<!-- Nav Bar End -->
-
-<!-- Bottom Bar Start -->
-<div class="bottom-bar">
-    <div class="container-fluid">
-        <div class="row align-items-center">
-            <div class="col-md-3">
-                <div class="logo">
-                    <a href="/home">
-                        <img src="/img/logo.png" alt="Logo">
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="search">
-                    <input type="text" value="{{searchQuery}}" id="search_all_text">
-                    <button id="search_all_btn"><i class="fa fa-search"></i></button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="user">
-                    <a href="/customer/wishlist" class="btn wishlist">
-                        <i class="fa fa-heart"></i>
-                        <span>(0)</span>
-                    </a>
-
-                    <a href="/cart" class="btn cart">
-                        <i class="fa fa-shopping-cart"></i>
-                        <span>(0)</span>
-                    </a>
-
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                            <i class="fa fa-user"></i>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right">
-                            {{#if user}}
-                                <a href="/customer/my-account" class="dropdown-item">My Account</a>
-                                <a href="/customer/wishlist" class="dropdown-item">Wishlist</a>
-                                <a href="/logout" class="dropdown-item">Logout</a>
-                            {{else}}
-                                <a href="/login" class="dropdown-item">Login</a>
-                                <a href="/signup" class="dropdown-item">Register</a>
-                            {{/if}}
-                        </div>
+                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                    <div class="navbar-nav mr-auto">
+                        <a href="/home" class="nav-item nav-link{{homeActive}}">Home</a>
+                        <a href="/products" class="nav-item nav-link{{shopActive}}">Products</a>
+                        <a href="/contact" class="nav-item nav-link{{contactActive}}">Contact Us</a>
                     </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+    <!-- Nav Bar End -->
 
+    <!-- Bottom Bar Start -->
+    <div class="bottom-bar">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-3">
+                    <div class="logo">
+                        <a href="/home">
+                            <img src="/img/logo.png" alt="Logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="search">
+                        <input type="text" value="{{searchQuery}}" id="search_all_text">
+                        <button id="search_all_btn"><i class="fa fa-search"></i></button>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="user">
+                        <a href="/customer/wishlist" class="btn wishlist">
+                            <i class="fa fa-heart"></i>
+                            <span>(0)</span>
+                        </a>
+
+                        <a href="/cart" class="btn cart">
+                            <i class="fa fa-shopping-cart"></i>
+                            <span id="cart-total">(0)</span>
+                        </a>
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown"
+                                    aria-haspopup="true" aria-expanded="false">
+                                <i class="fa fa-user"></i>
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                {{#if user}}
+                                    <a href="/customer/my-account" class="dropdown-item">My Account</a>
+                                    <a href="/customer/wishlist" class="dropdown-item">Wishlist</a>
+                                    <a href="/logout" class="dropdown-item">Logout</a>
+                                {{else}}
+                                    <a href="/login" class="dropdown-item">Login</a>
+                                    <a href="/signup" class="dropdown-item">Register</a>
+                                {{/if}}
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<!-- Bottom Bar End -->
+    <!-- Bottom Bar End -->
+</header>

@@ -17,33 +17,35 @@
                 </thead>
 
                 <tbody class="align-middle">
-                {{#each product}}
-                    <tr>
-                        <td>
-                            <div class="img">
-                                <a href="product-detail"><img src="{{image.[0]}}" alt="Image"></a>
-                                <p>{{name}}</p>
-                            </div>
-                        </td>
-                        <td>${{price}}</td>
-                        <td>
-                            <div class="qty">
-                                <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                <input type="text" value="1">
-                                <button class="btn-plus"><i class="fa fa-plus"></i></button>
-                            </div>
-                        </td>
-                        {{#if ../isWishlist }}
+                {{#each cart}}
+                    {{#with product}}
+                        <tr>
                             <td>
-                                <button><i class="fa fa-shopping-cart"></i></button>
+                                <div class="img">
+                                    <a href="/products/{{id}}"><img src="{{images.[0].url}}" alt="Image"></a>
+                                    <p>{{name}}</p>
+                                </div>
                             </td>
-                        {{else}}
-                            <td>$99</td>
-                        {{/if}}
-                        <td>
-                            <button><i class="fa fa-trash"></i></button>
-                        </td>
-                    </tr>
+                            <td>${{price}}</td>
+                            <td>
+                                <div class="qty">
+                                    <button class="btn-minus"><i class="fa fa-minus"></i></button>
+                                    <input type="text" value="1">
+                                    <button class="btn-plus"><i class="fa fa-plus"></i></button>
+                                </div>
+                            </td>
+                            {{#if ../isWishlist }}
+                                <td>
+                                    <button><i class="fa fa-shopping-cart"></i></button>
+                                </td>
+                            {{else}}
+                                <td>$99</td>
+                            {{/if}}
+                            <td>
+                                <button><i class="fa fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    {{/with}}
                 {{/each}}
                 </tbody>
             </table>

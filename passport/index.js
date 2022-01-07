@@ -21,7 +21,8 @@ passport.use('local', new LocalStrategy({
 
 passport.serializeUser(function (user, done) {
     done(null, {
-        email: user.email
+        email: user.email,
+        id: user.id
     });
 });
 

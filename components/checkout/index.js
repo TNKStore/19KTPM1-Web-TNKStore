@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('./cartDetailController')
+const controller = require('./checkoutController')
 
-router.get('/', controller.getCart)
+router.get('/', controller.checkOut)
 
 module.exports = router

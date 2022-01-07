@@ -1,11 +1,14 @@
 const userService = require("../user/userService");
+const cartService = require("../cart/cartDetailService");
+const randomstring = require("randomstring");
 
 exports.logout = (req, res, next) => {
     req.logout()
+    req.session.unAuthID = randomstring.generate(16);
     res.redirect('/')
 }
 
-exports.login = (req, res, next) => {
+exports.getLogIn = (req, res, next) => {
     if (req.user) {
         return res.redirect('/')
     }
@@ -14,6 +17,11 @@ exports.login = (req, res, next) => {
         title: 'Sign in',
         wrongPassword
     })
+}
+
+exports.postLogIn = async (req, res) => {
+    await cartService.updateUserCart(req.user.id, req.session.unAuthID);
+    res.redirect('/')
 }
 
 exports.getSignUp = (req, res, next) => {
@@ -32,10 +40,11 @@ exports.postSignUp = async (req, res, next) => {
     if (await userService.findByEmail(email))
         return res.redirect('/signup?error');
     const user = await userService.register(email, firstName, lastName, password, phone, address)
-    req.login(user, function (err) {
+    req.login(user, async function (err) {
         if (err) {
             return next(err);
         }
+        await cartService.updateUserCart(req.user.id, req.session.unAuthID);
         return res.redirect('/');
     });
 }

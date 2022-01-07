@@ -11,9 +11,11 @@ const userIDMiddleware = require('./middlewares/userIDMiddleware')
 const indexRouter = require('./components/others');
 const authRouter = require('./components/auth');
 const cartRouter = require('./components/cart');
+const checkoutRouter = require('./components/checkout');
 const productRouter = require('./components/product');
 const userRouter = require('./components/user');
 const catalogRouter = require('./components/catalog');
+const apiRouter = require('./api')
 const fs = require("fs");
 
 const app = express();
@@ -28,23 +30,25 @@ app.use(express.urlencoded({extended: false}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use(session({secret: process.env.SECRET_SESSION}));
+app.use(session({secret: 'process.env.SECRET_SESSION'}));
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(userIDMiddleware);
 
 app.use(function (req, res, next) {
     res.locals.user = req.user
     next()
 })
 
-app.use(userIDMiddleware);
-
 app.use('/', indexRouter);
 app.use('/', authRouter);
-app.use('/cart', loggedInGuard, cartRouter);
+app.use('/cart', cartRouter);
+app.use('/checkout', loggedInGuard, checkoutRouter);
 app.use('/products', productRouter);
 app.use('/catalog', catalogRouter);
 app.use('/customer', loggedInGuard, userRouter);
+app.use('/api', apiRouter);
 
 app.use(function (req, res, next) {
     next(createError(404));

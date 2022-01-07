@@ -819,7 +819,7 @@ h2 {
     display: inline-block;
     color: #ffffff;
     margin: 0;
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .product-item .product-price h3 span {
@@ -2415,4 +2415,36 @@ label.error {
 h3.no-product-notice {
     text-align: center;
     color: #FF6F61;
+}
+
+.btn.cart.shake {
+    animation: shakeCart 0.4s ease-in-out forwards;
+}
+
+/* Cart shake */
+@keyframes xAxis {
+    100% {
+        transform: translateX(calc(50vw - 105px));
+    }
+}
+
+@keyframes yAxis {
+    100% {
+        transform: translateY(calc(-50vh + 75px));
+    }
+}
+
+@keyframes shakeCart {
+    25% {
+        transform: translateX(6px)
+    }
+    50% {
+        transform: translateX(-4px);
+    }
+    75% {
+        transform: translateX(2px);
+    }
+    100% {
+        transform: translateX(0);
+    }
 }
