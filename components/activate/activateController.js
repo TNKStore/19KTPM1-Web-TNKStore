@@ -1,5 +1,6 @@
 const activateService = require('./activateService')
 const userService = require('../user/userService')
+const cartService = require("../cart/cartDetailService");
 
 exports.activate = async (req, res, next) => {
     const {email} = req.query;
@@ -12,7 +13,7 @@ exports.activate = async (req, res, next) => {
             if (err) {
                 return next(err);
             }
-            //await cartService.updateUserCart(req.user.id, req.session.unAuthID);
+            await cartService.updateUserCart(req.user.id, req.session.unAuthID);
             return res.redirect('/');
         });
     } else {

@@ -46,7 +46,7 @@ exports.postSignUp = async (req, res, next) => {
             return next(err);
         }
         await cartService.updateUserCart(req.user.id, req.session.unAuthID);
-        //return res.redirect('/');
+        return res.redirect('/');
     });*/
     return res.redirect('/login');
 }
