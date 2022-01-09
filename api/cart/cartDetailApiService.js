@@ -1,6 +1,7 @@
 const CartDetail = require("../../models/cartDetail");
-const cartDetailService = require("../../components/cart/cartDetailService")
 const Product = require("../../models/product");
+const cartDetailService = require("../../components/cart/cartDetailService")
+const productService = require("../../components/product/productService")
 
 exports.updateCartDetail = (unAuthID, productID, quantity) =>
     CartDetail.update({
@@ -13,23 +14,40 @@ exports.updateCartDetail = (unAuthID, productID, quantity) =>
             }
         })
 
-exports.addToCart = async (userID, unAuthID, productID) => {
+async function isAvailable(productID, require) {
+    const product = await productService.getDetail(productID);
+    return require <= product.amount;
+}
+
+exports.addToCart = async (userID, unAuthID, productID, quantity) => {
     // Check if product in cart exists
     const cart = await cartDetailService.getCart(userID, unAuthID);
+
     const cartDetails = cart.rows.filter((value) => value.productID === parseInt(productID));
     if (cartDetails.length > 0) {
-        await this.updateCartDetail(unAuthID, productID, cartDetails[0].quantity + 1)
+        const newQuantity = cartDetails[0].quantity + quantity;
+        if (!(await isAvailable(productID, newQuantity))) {
+            return null;
+        }
+        await this.updateCartDetail(unAuthID, productID, newQuantity)
     } else {
+        if (!(await isAvailable(productID, quantity))) {
+            return null;
+        }
         await CartDetail.create({
             userID: userID || null,
             unAuthID: unAuthID,
-            productID: productID
+            productID: productID,
+            quantity: quantity
         });
     }
     return await cartDetailService.getCart(userID, unAuthID)
 }
 
 exports.update = async (userID, unAuthID, productID, quantity) => {
+    if (!(await isAvailable(productID, quantity))) {
+        return null;
+    }
     const cartDetail = await (userID ? CartDetail.findOne({
             where: {
                 user_id: userID,
@@ -64,4 +82,14 @@ exports.delete = async (userID, unAuthID, productID) => {
             productID: productID
         }
     })
+}
+
+exports.clearOutOfStock = async (userID) => {
+    const cart = await cartDetailService.getCartInDetail(userID);
+
+    for (const cartDetail of cart) {
+        if (cartDetail.quantity > cartDetail.product.amount) {
+            await cartDetail.destroy();
+        }
+    }
 }

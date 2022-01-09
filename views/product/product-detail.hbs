@@ -34,7 +34,7 @@
                                 <span>${{oldPrice}}</span>{{/if}}
                             </p>
                         </div>
-                        <div class="quantity">
+                        <div class="quantity product-{{id}}">
                             <h4>Quantity:</h4>
                             <div class="qty">
                                 <button class="btn-minus"><i class="fa fa-minus"></i></button>
@@ -59,10 +59,7 @@
                 <a class="nav-link active" data-toggle="pill" href="#description">Description</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="pill" href="#specification">Specification</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-toggle="pill" href="#reviews">Reviews (1)</a>
+                <a class="nav-link" data-toggle="pill" href="#reviews">Reviews</a>
             </li>
         </ul>
 
@@ -71,43 +68,72 @@
             <h4>Product description</h4>
             <p>{{description}}</p>
         </div>
-        <div id="specification" class="container tab-pane fade">
-            <h4>Product specification</h4>
-            <ul>
-                <li>Lorem ipsum dolor sit amet</li>
-                <li>Lorem ipsum dolor sit amet</li>
-                <li>Lorem ipsum dolor sit amet</li>
-                <li>Lorem ipsum dolor sit amet</li>
-                <li>Lorem ipsum dolor sit amet</li>
-            </ul>
-        </div>
 {{/with}}
     <div id="reviews" class="container tab-pane fade">
         <div class="reviews-submit">
             <h4>Give your Review:</h4>
             <div class="row form">
                 <div class="col-sm-6">
-                    <input type="text" placeholder="Name">
+                    <label>Name</label>
+                    <input type="text" placeholder="Name" value="{{user.firstName}}" name="name">
+
                 </div>
                 <div class="col-sm-6">
-                    <input type="email" placeholder="Email">
+                    <label>E-mail</label>
+                    <input type="email" placeholder="Email" value="{{user.email}}" name="email">
                 </div>
                 <div class="col-sm-12">
-                    <textarea placeholder="Review"></textarea>
+                    <label>Review</label>
+                    <textarea placeholder="Review" name="review"></textarea>
                 </div>
                 <div class="col-sm-12">
-                    <button>Submit</button>
+                    <input type="hidden" value="{{product.id}}"/>
+                    <button>Review</button>
                 </div>
             </div>
         </div>
 
-        <div class="reviews-submitted">
-            <div class="reviewer">Phasellus Gravida - <span>01 Jan 2020</span></div>
-            <p>
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-                doloremque laudantium, totam rem aperiam.
-            </p>
+        <div class="reviews-list">
+            {{#each feedback}}
+                <div class="reviews-submitted">
+                    <div class="reviewer">{{fullName}} - <span>{{createdAt}}</span></div>
+                    <p>
+                        {{content}}
+                    </p>
+                </div>
+            {{/each}}
         </div>
+
+        <!-- Pagination Start -->
+        <div class="col-md-12">
+            <nav class="review-{{product.id}}">
+                <ul class="pagination justify-content-center">
+                    <!-- Previous Button -->
+                    {{#if previous}}
+                        <li class="page-item">
+                            <a class="page-link" href={{previous.url}}>Previous</a>
+                        </li>
+                    {{/if}}
+
+                    <!-- Pages -->
+                    {{#each pages}}
+                        {{#if active}}
+                            <li class="page-item active"><a class="page-link" href={{url}}>{{page}}</a></li>
+                        {{else}}
+                            <li class="page-item"><a class="page-link" href={{url}}>{{page}}</a></li>
+                        {{/if}}
+                    {{/each}}
+
+                    <!-- Next Button -->
+                    {{#if next}}
+                        <li class="page-item">
+                            <a class="page-link" href={{next.url}}>Next</a>
+                        </li>
+                    {{/if}}
+                </ul>
+            </nav>
+        </div>
+        <!-- Pagination End -->
     </div>
 </div>
 </div>
@@ -149,3 +175,17 @@
 <!-- Brand End -->
 
 {{> footer}}
+
+
+<script id="review-template" type="text/x-handlebars">
+        <div class="reviews-submitted">
+            <div class="reviewer">\{{feedback.fullName}} - <span>\{{feedback.createdAt}}</span></div>
+            <p>
+                \{{feedback.content}}
+            </p>
+        </div>
+
+
+
+
+</script>

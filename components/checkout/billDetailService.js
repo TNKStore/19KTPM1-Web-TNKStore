@@ -1,5 +1,6 @@
 const BillDetail = require('../../models/billDetail')
 const cartDetailService = require("../cart/cartDetailService");
+const productService = require("../product/productService");
 
 exports.createFromCart = async (billID, userID) => {
     const cartDetails = await cartDetailService.getCartInDetail(userID);
@@ -12,5 +13,6 @@ exports.createFromCart = async (billID, userID) => {
         })
     }
 
+    await productService.exportCartToBill(userID);
     await cartDetailService.clearAll(userID);
 }

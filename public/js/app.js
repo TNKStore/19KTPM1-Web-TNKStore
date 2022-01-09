@@ -146,9 +146,32 @@ $(document).ready(function () {
     if ($(".add-this-to-cart").length) {
         $(".add-this-to-cart").on("click", function (e) {
             event.preventDefault();
-            $.post(`/api/cart/add`, {
-                id: getInputNode(e.currentTarget, 1)[0].value
-            }, updateCartHeader)
+            const id = getInputNode(e.currentTarget, 1)[0].value
+            const quantity = $(`div.quantity.product-${id} input`)[0].value
+            if (quantity > 0) {
+                $.post(`/api/cart/add`, {
+                    id: id,
+                    quantity: quantity
+                }, updateCartHeader).fail(() => alertError("Out of stock"))
+            } else {
+                alertError("Negative quantity");
+                $(`div.quantity.product-${id} input`)[0].value = 1;
+            }
+        });
+
+
+        $(`div.quantity button.btn-minus`).on("click", function (e) {
+            event.preventDefault();
+            const $input = $(`div.quantity input`)[0];
+            if (parseInt($input.value) > 1) {
+                $input.value = parseInt($input.value) - 1;
+            }
+        });
+
+        $(`div.quantity button.btn-plus`).on("click", function (e) {
+            event.preventDefault();
+            const $input = $(`div.quantity input`)[0];
+            $input.value = parseInt($input.value) + 1;
         });
     }
 
@@ -157,7 +180,7 @@ $(document).ready(function () {
             event.preventDefault();
             $.post(`/api/cart/add`, {
                 id: getInputNode(e.currentTarget, 3)[0].value
-            }, updateCartHeader)
+            }, updateCartHeader).fail(() => alertError("Out of stock"))
         });
     }
 
@@ -166,7 +189,7 @@ $(document).ready(function () {
             event.preventDefault();
             $.post(`/api/cart/add`, {
                 id: getInputNode(e.currentTarget, 1)[0].value
-            }, updateCartHeader)
+            }, updateCartHeader).fail(() => alertError("Out of stock"))
         });
     }
 
@@ -178,7 +201,7 @@ $(document).ready(function () {
                 id: getInputNode(e.currentTarget, 1)[0].value
             }, function (data) {
                 window.location.href = '/cart'
-            })
+            }).fail(() => alertError("Out of stock"));
         })
     }
 
@@ -189,7 +212,7 @@ $(document).ready(function () {
                 id: getInputNode(e.currentTarget, 2)[0].value
             }, function (data) {
                 window.location.href = '/cart'
-            })
+            }).fail(() => alertError("Out of stock"));
         })
     }
 
@@ -233,6 +256,16 @@ $(document).ready(function () {
         )
     }
 
+    function alertError(msg) {
+        cuteAlert({
+            type: "error",
+            title: "Error",
+            message: msg,
+            img: "error.svg",
+            buttonText: "OK"
+        })
+    }
+
     const $inputQuantity = $(".product-quantity.in-cart");
     if ($inputQuantity.length) {
         $inputQuantity.blur(function (e) {
@@ -245,7 +278,10 @@ $(document).ready(function () {
                         quantity
                     }, function (data) {
                         e.currentTarget.value = data.quantity
-                    })
+                    }).fail(() => {
+                        alertError("Out of stock");
+                        e.currentTarget.value = 1;
+                    });
                 } else {
                     $.post(`/api/cart/update`, {
                         id,
@@ -254,7 +290,10 @@ $(document).ready(function () {
                         e.currentTarget.value = data.quantity
                         updateTotal(id, data);
                         updateCartContent();
-                    })
+                    }).fail(() => {
+                        alertError("Out of stock");
+                        e.currentTarget.value = 1;
+                    });
                 }
             }
         )
@@ -273,7 +312,7 @@ $(document).ready(function () {
                     $(`#product-${id} td div.qty input`)[0].value = data.quantity
                     updateTotal(id, data);
                     updateCartContent();
-                })
+                }).fail(() => alertError("Out of stock"));
             }
         )
     }
@@ -370,37 +409,77 @@ $(document).ready(function () {
                     address: $addressField.value,
                     phone: $phoneField.value
                 }, function (data) {
-                    if (data['diffAddress'] !== undefined) {
-                        cuteAlert({
-                            type: "question",
-                            title: "Update address",
-                            message: "Do you want to use this address as your main address?",
-                            confirmText: "Update",
-                            cancelText: "Cancel"
-                        }).then((msg) => {
-                            if (msg === "confirm") {
-                                $.post('/my-account/address/update', {
-                                    address: $addressField.value,
-                                    phone: $phoneField.value
-                                })
-                            }
-                            window.location.href = `/bill?id=${data.id}`
-                        })
-                    } else {
-                        window.location.href = `/bill?id=${data.id}`
-                    }
+                    window.location.href = `/bill?id=${data.id}`
                 }).fail(function () {
                     cuteAlert({
                         type: "question",
-                        title: "Unexpected error",
-                        message: "Please try again!",
+                        title: "Out of stock",
+                        message: "Some products are out of stock! Do you want to remove them from cart?",
                         img: "error.svg",
-                        buttonText: "Try again"
+                        confirmText: "OK",
+                        cancelText: "Cancel"
                     }).then((msg) => {
-                        window.location.reload()
+                        if (msg === "confirm") {
+                            $.post('/api/cart/clear-unavailable', function (e) {
+                                window.location.href = '/cart'
+                            })
+                        } else {
+                            window.location.href = '/cart'
+                        }
                     })
                 })
             }
         })
+    }
+
+    const $reviewsList = $(`div.reviews-list`);
+    if ($reviewsList.length) {
+        $(`div#reviews .reviews-submit button`).on("click", function (e) {
+            e.preventDefault();
+            const productID = getInputNode(e.currentTarget, 1)[0].value;
+            const $fullNameField = $(`div#reviews .reviews-submit input[name="name"]`)[0];
+            const $emailField = $(`div#reviews .reviews-submit input[name="email"]`)[0];
+            const $reviewField = $(`div#reviews .reviews-submit textarea[name="review"]`)[0];
+
+            let valid = checkErrorFor('Please input your name', $fullNameField);
+            valid = checkErrorFor('Please input your email', $emailField) && valid;
+            valid = checkErrorFor('Please input your review', $reviewField) && valid;
+
+            if (valid) {
+                $.post('/api/feedback/add', {
+                        productID: productID,
+                        fullName: $fullNameField.value,
+                        email: $emailField.value,
+                        review: $reviewField.value
+                    },
+                    function (data) {
+                        const totalReviews = $(`.reviews-submitted`);
+                        $reviewField.value = "";
+                        if (totalReviews.length === 5) {
+                            if (window.location.href.includes('reviews')) {
+                                window.location.reload();
+                            } else {
+                                window.location.href = window.location.href + '?reviews';
+                            }
+                        }
+                        const page = $(`.page-item.active a`);
+                        if (page.length && page[0].innerText === "1") {
+                            const template = Handlebars.compile($('#review-template')[0].innerHTML);
+                            const node = template({feedback: data});
+                            $('.reviews-list').prepend(node);
+                        } else {
+                            if (window.location.href.includes('reviews')) {
+                                window.location.reload();
+                            } else {
+                                window.location.href = window.location.href + '?reviews';
+                            }
+                        }
+                    })
+            }
+        });
+
+        if (window.location.href.includes('reviews')) {
+            $(`a.nav-link[href='#reviews']`)[0].click();
+        }
     }
 })

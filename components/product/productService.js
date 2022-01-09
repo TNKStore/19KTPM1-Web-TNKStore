@@ -2,6 +2,7 @@ const Product = require("../../models/product")
 const Catalog = require("../../models/catalog")
 const Image = require("../../models/image")
 const {Op} = require("sequelize");
+const cartDetailService = require("../cart/cartDetailService");
 
 const criteria = [
     {url: `/products?sort=newest`, value: `Mới nhất`, criteria: `newest`, column: [`created_at`, 'DESC']},
@@ -174,4 +175,13 @@ exports.updateAmountView = async (id) => {
     const product = await this.getDetail(id);
     product.amountView += 1;
     return product.save();
+}
+
+exports.exportCartToBill = async (userID) => {
+    const cart = await cartDetailService.getCartInDetail(userID);
+    for (const cartDetail of cart) {
+        const product = cartDetail.product;
+        product.amount -= cartDetail.quantity;
+        await product.save();
+    }
 }

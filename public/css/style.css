@@ -1017,24 +1017,28 @@ h2 {
     margin-bottom: 30px;
 }
 
-.product-view .pagination {
+.pagination {
     margin: 0;
 }
 
-.product-view .pagination .page-item .page-link {
+.pagination .page-item .page-link {
     color: #353535;
     background: transparent;
     border-color: #353535;
 }
 
-.product-view .pagination .page-item:hover .page-link,
-.product-view .pagination .page-item.active .page-link {
+.product-detail nav ul.pagination li::before {
+    content: '';
+}
+
+.pagination .page-item:hover .page-link,
+.pagination .page-item.active .page-link {
     color: #FF6F61;
     background: #000000;
 }
 
 @media (max-width: 991.98px) {
-    .product-view .pagination {
+    .pagination {
         margin-bottom: 30px;
     }
 }
@@ -2485,6 +2489,7 @@ h3.no-product-notice {
         transform: translateX(0);
     }
 }
+
 h1.address-title {
     font-size: 25px;
     margin-bottom: 20px;

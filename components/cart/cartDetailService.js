@@ -73,3 +73,16 @@ exports.clearAll = async (userID, unAuthID) =>
         .forEach((value) => {
             value.destroy()
         })
+
+exports.isAllAvailable = async (userID) => {
+    const cart = await this.getCartInDetail(userID);
+
+    let isAvailable = true;
+    cart.forEach((cartDetail) => {
+         if (cartDetail.quantity > cartDetail.product.amount) {
+             isAvailable = false;
+             return isAvailable;
+         }
+    });
+    return isAvailable;
+}
