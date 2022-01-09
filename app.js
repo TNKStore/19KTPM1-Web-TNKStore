@@ -17,6 +17,7 @@ const productRouter = require('./components/product');
 const userRouter = require('./components/user');
 const catalogRouter = require('./components/catalog');
 const apiRouter = require('./api')
+const activateRouter = require('./components/activate')
 const fs = require("fs");
 
 const app = express();
@@ -50,6 +51,7 @@ app.use('/checkout', loggedInGuard, checkoutRouter);
 app.use('/products', productRouter);
 app.use('/catalog', catalogRouter);
 app.use('/customer', loggedInGuard, userRouter);
+app.use('/activate', activateRouter);
 app.use('/api', apiRouter);
 
 app.use(function (req, res, next) {

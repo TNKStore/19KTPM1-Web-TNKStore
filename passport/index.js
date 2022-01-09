@@ -11,8 +11,10 @@ passport.use('local', new LocalStrategy({
         if (!user) {
             return done(null, false);
         }
+        const isActivated = await userService.checkActivate(user);
+        const isLocked = await userService.checkLock(user);
         const isValid = await userService.verifyPassword(password, user);
-        if (!isValid) {
+        if (!isValid || !isActivated || isLocked) {
             return done(null, false);
         }
         return done(null, user)

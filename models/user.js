@@ -32,8 +32,19 @@ User = sequelize.define('user', {
     address: {
         type: DataTypes.STRING,
         field: 'address'
+    }, 
+    locked: {
+        type: DataTypes.INTEGER,
+        field: 'locked'
+    },
+    activated: {
+        type: DataTypes.INTEGER,
+        field: 'activated'
+    },
+    activationString: {
+        type: DataTypes.STRING,
+        field: 'activationString'
     }
-
 }, {
     freezeTableName: true,
     timestamps: false

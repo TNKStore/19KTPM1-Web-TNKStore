@@ -1,5 +1,6 @@
 const userService = require("../user/userService");
 const cartService = require("../cart/cartDetailService");
+const activateService = require("../activate/activateService")
 const randomstring = require("randomstring");
 
 exports.logout = (req, res, next) => {
@@ -40,11 +41,12 @@ exports.postSignUp = async (req, res, next) => {
     if (await userService.findByEmail(email))
         return res.redirect('/signup?error');
     const user = await userService.register(email, firstName, lastName, password, phone, address)
-    req.login(user, async function (err) {
+    /*req.login(user, async function (err) {
         if (err) {
             return next(err);
         }
         await cartService.updateUserCart(req.user.id, req.session.unAuthID);
         return res.redirect('/');
-    });
+    });*/
+    return res.redirect('/login');
 }
