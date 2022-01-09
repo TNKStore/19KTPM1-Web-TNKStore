@@ -6,10 +6,10 @@
                 <tr>
                     <th>Product</th>
                     <th>Price</th>
-                    <th>Quantity</th>
                     {{#if isWishlist}}
                         <th>Cart</th>
                     {{else}}
+                        <th>Quantity</th>
                         <th>Total</th>
                     {{/if}}
                     <th>Remove</th>
@@ -19,30 +19,33 @@
                 <tbody class="align-middle">
                 {{#each cart}}
                     {{#with product}}
-                        <tr>
+                        <tr id="product-{{id}}">
+                            <input type="hidden" value="{{id}}">
                             <td>
                                 <div class="img">
-                                    <a href="/products/{{id}}"><img src="{{images.[0].url}}" alt="Image"></a>
+                                    <a href="/products/{{id}}"><img src="{{images.[0].url}}"
+                                                                    alt="Image"></a>
                                     <p>{{name}}</p>
                                 </div>
                             </td>
-                            <td>${{price}}</td>
-                            <td>
-                                <div class="qty">
-                                    <button class="btn-minus"><i class="fa fa-minus"></i></button>
-                                    <input type="text" value="1">
-                                    <button class="btn-plus"><i class="fa fa-plus"></i></button>
-                                </div>
-                            </td>
+                            <td class="product-price">{{price}}₫</td>
                             {{#if ../isWishlist }}
                                 <td>
                                     <button><i class="fa fa-shopping-cart"></i></button>
                                 </td>
                             {{else}}
-                                <td>$99</td>
+                                <td>
+                                    <div class="qty">
+                                        <button class="btn-minus in-cart"><i class="fa fa-minus"></i></button>
+                                        <input type="text" value="{{../quantity}}"
+                                               class="product-quantity in-cart">
+                                        <button class="btn-plus in-cart"><i class="fa fa-plus"></i></button>
+                                    </div>
+                                </td>
+                                <td class="in-total">{{../total}}₫</td>
                             {{/if}}
                             <td>
-                                <button><i class="fa fa-trash"></i></button>
+                                <button class="product-delete"><i class="fa fa-trash"></i></button>
                             </td>
                         </tr>
                     {{/with}}

@@ -10,6 +10,7 @@ router.get('/my-account', controller.getAccount);
 
 router.post('/my-account/account-detail', controller.changeAccountDetail);
 router.post('/my-account/change-password', controller.changePassword);
+router.post('/my-account/address/update', controller.updateAddress);
 
 router.get('/wishlist', controller.getWishlist);
 

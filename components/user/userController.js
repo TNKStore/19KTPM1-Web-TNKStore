@@ -1,25 +1,31 @@
 const userService = require('./userService')
+const billService = require("../bill/billService");
+const moment = require("moment");
 
 exports.getAccount = async (req, res, next) => {
     const orders = req.query['orders'];
-    const payment = req.query['payment'];
     const address = req.query['address'];
     const account = req.query['account'];
     const success = (req.query['success'] !== undefined);
-    let dashboard;
-    if (!orders && !payment && !address && !account) {
-        dashboard = "active";
-    };
+    const failure = (req.query['failure'] !== undefined);
+
+    const bill = orders ? await billService.getAllBills(req.user.id) : null;
+    if (bill) {
+        bill.forEach((value, index) => {
+            bill[index].createdAt =  moment(bill[index].createdAt).format('DD/MM/YYYY');
+        })
+    }
+
     const user = await userService.findByEmail(req.user.email);
     res.render('user/my-account', {
         title: 'My Account',
-        dashboard,
         orders,
-        payment,
         address,
         account,
         success,
-        user
+        failure,
+        user,
+        bill
     });
 }
 
@@ -43,10 +49,20 @@ exports.changePassword = async (req, res, next) => {
     const isMatch = await userService.verifyPassword(password, user);
 
     if (!isMatch) {
-        return res.redirected('/customer/my-account?account=active&wrong-password')
+        return res.redirect('/customer/my-account?account=active&wrong-password')
     }
     userService.updatePassword(req.user.email, newPassword)
         .then(
             _ => res.redirect('/customer/my-account?account=active&success'),
             _ => next())
+}
+
+exports.updateAddress = async (req, res, next) => {
+    const {address, phone} = req.body;
+    const success = await userService.updateAddress(req.user.id, address, phone);
+
+    if (success > 0) {
+        return res.redirect('/customer/my-account?address=active&success');
+    }
+    return res.redirect('/customer/my-account?address=active&failure');
 }

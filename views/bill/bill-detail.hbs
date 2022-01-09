@@ -1,0 +1,82 @@
+{{> header}}
+
+<!-- Cart Start -->
+<div class="cart-page">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="cart-page-inner">
+                    <div class="table-responsive">
+                        {{#if notFound}}
+                            <h2>Bill Not Found</h2>
+                        {{else}}
+                            <table class="table table-bordered">
+                                <thead class="thead-dark">
+                                <tr>
+                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                    <th>Cart</th>
+                                </tr>
+                                </thead>
+                                <tbody class="align-middle">
+                                {{#each bill.products}}
+                                    <tr id="product-{{id}}">
+                                        <input type="hidden" value="{{id}}">
+                                        <td>
+                                            <div class="img">
+                                                <a href="/products/{{id}}"><img src="{{images.[0].url}}"
+                                                                                alt="Image"></a>
+                                                <p>{{name}}</p>
+                                            </div>
+                                        </td>
+                                        <td class="product-price">{{price}}₫</td>
+                                        {{#if ../isWishlist }}
+                                            <td>
+                                                <button><i class="fa fa-shopping-cart"></i></button>
+                                            </td>
+                                        {{else}}
+                                            <td>
+                                                <div class="qty">
+                                                    <input type="text" value="{{billdetail.amount}}"
+                                                           class="product-quantity order-review" disabled>
+                                                </div>
+                                            </td>
+                                        {{/if}}
+                                        <td>
+                                            <input type="hidden" value="{{id}}"/>
+                                            <button class="add-to-cart-bill"><i class="fa fa-shopping-cart"></i></button>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="cart-page-inner">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="cart-summary">
+                                <div class="bill-content">
+                                    <h1>Bill Detail</h1>
+                                    <p>Bill ID<span>{{bill.id}}</span></p>
+                                    <p>Created At<span>{{bill.createdAt.datetime}}</span></p>
+                                    <p>Status<span>{{bill.status.name}}</span></p>
+                                    <p>Address<span>{{bill.address}}</span></p>
+                                    <p>Phone<span>{{bill.phone}}</span></p>
+                                    <p>Payment Method<span>{{bill.payment.name}}</span></p>
+                                    <p>In Total<span>{{bill.total}}₫</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Cart End -->
+{{> footer}}

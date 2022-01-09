@@ -47,10 +47,29 @@ exports.getCartInDetail = (userID, unAuthID) =>
         where: {
             user_id: userID
         },
-        include: [{model: Product, include: [{model: Image}]}]
+        include: [
+            {model: Product, include: [{model: Image}]}
+        ]
     }) : CartDetail.findAll({
         where: {
             unauth_id: unAuthID
         },
         include: [{model: Product, include: [{model: Image}]}]
     })
+
+exports.clearAll = async (userID, unAuthID) =>
+    (userID ? await CartDetail.findAll(
+            {
+                where: {
+                    user_id: userID
+                }
+            })
+        : await CartDetail.findAll(
+            {
+                where: {
+                    unAuthID: unAuthID
+                }
+            }))
+        .forEach((value) => {
+            value.destroy()
+        })

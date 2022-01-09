@@ -11,6 +11,7 @@ const userIDMiddleware = require('./middlewares/userIDMiddleware')
 const indexRouter = require('./components/others');
 const authRouter = require('./components/auth');
 const cartRouter = require('./components/cart');
+const billRouter = require('./components/bill');
 const checkoutRouter = require('./components/checkout');
 const productRouter = require('./components/product');
 const userRouter = require('./components/user');
@@ -44,6 +45,7 @@ app.use(function (req, res, next) {
 app.use('/', indexRouter);
 app.use('/', authRouter);
 app.use('/cart', cartRouter);
+app.use('/bill', loggedInGuard, billRouter);
 app.use('/checkout', loggedInGuard, checkoutRouter);
 app.use('/products', productRouter);
 app.use('/catalog', catalogRouter);

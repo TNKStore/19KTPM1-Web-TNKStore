@@ -40,3 +40,12 @@ exports.updatePassword = (email, pwd) => User.update({
         email: email
     }
 })
+
+exports.updateAddress = (id, address, phone) => User.update({
+    address: address,
+    phone: phone
+}, {
+    where: {
+        id: id
+    }
+})
