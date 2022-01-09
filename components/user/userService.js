@@ -12,6 +12,16 @@ function hashPassword(password) {
 
 exports.findByEmail = (email) => User.findOne({ where: { email: email } })
 
+exports.checkActivate = async (user) => {
+    if (user.activated === 1) return true;
+    else return false;
+}
+
+exports.checkLock = async (user) => {
+    if (user.locked === 1) return true;
+    else return false;
+}
+
 exports.verifyPassword = (password, user) => bcrypt.compare(password, user.pwd)
 
 exports.register = async (email, firstName, lastName, password, phone, address) => {
